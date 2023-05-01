@@ -20,7 +20,12 @@ export class ProductController {
 
   @MessagePattern('findOneProduct')
   findOne(@Payload() id: number) {
-    return this.productService.findOne(id);
+    return this.productService.findOneById(id);
+  }
+
+  @MessagePattern('findByNameProduct')
+  findByName(@Payload() name: string) {
+    return this.productService.findByName(name);
   }
 
   @MessagePattern('updateProduct')
