@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -36,5 +36,15 @@ export class ProductController {
   @MessagePattern('removeProduct')
   remove(@Payload() id: number) {
     return this.productService.remove(id);
+  }
+
+  @EventPattern('orderPlaced')
+  orderPlaced(@Payload() orders: { id: number; quantity: number }[]) {
+    return this.productService.orderPlaced(orders);
+  }
+
+  @MessagePattern('getQuantities')
+  getQty(ids: number[]) {
+    return this.productService.getQuantities(ids);
   }
 }
